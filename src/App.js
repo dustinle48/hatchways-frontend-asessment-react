@@ -1,24 +1,48 @@
-import logo from './logo.svg';
 import './App.css';
+import React, { useState, useEffect } from "react"
+import Home from './components/Home'
+import { Grid } from '@mui/material';
 
 function App() {
+  const API = "https://api.hatchways.io/assessment/students"
+
+  const [data, setData] = useState([])
+  const [students, setStudents] = useState([])
+
+  const getData = async () => {
+    fetch(API)
+    .then(res => res.json())
+    .then(d => setData(d.students))
+    .catch(e => console.log(e))
+  }
+
+  const calculateData = () => {
+    data.forEach(student => {
+      let sum = student.grades.reduce((c,p) => parseInt(c)+parseInt(p))
+      let average = sum / student.grades.length
+      student.tag = []
+      student.average = average
+    })
+    setStudents(data)
+  }
+
+  useEffect(() => {
+    getData()
+  },[])
+
+  useEffect(() => {
+    calculateData() // eslint-disable-next-line
+  },[data])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Grid container className='container'>
+      <Grid item lg={3} md={2} sm={0}></Grid>
+      <Grid item lg={6} md={8} sm={12} sx={{marginTop: '5rem'}} className='main'>
+        <Home students={students} setStudents={setStudents} />
+      </Grid>
+      <Grid item lg={3} md={2} sm={0}></Grid>
+    </Grid>
+    
   );
 }
 

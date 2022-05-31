@@ -36,3 +36,26 @@
     transform: rotate(360deg);
   }
 }
+.container {
+  height: 100vh;
+  background-color: #EFEFEF;
+}
+.main {
+  background-color: white;
+  border-radius: 1rem;
+  border: #d3bcbc 0.2rem solid;
+  box-shadow: 0.1rem 0.2rem #d3bcbc;
+  height: 70%;
+  overflow-y: scroll;
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+.main::-webkit-scrollbar {
+  display: none; /* Chrome, Safari and Opera */
+}
+
+img {
+  width: 100%;
+  border-radius: 50%;
+  border: #000000 0.5px solid;
+}
